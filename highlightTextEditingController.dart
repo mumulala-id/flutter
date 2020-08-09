@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 class MyTextEditingController extends TextEditingController {
   final RegExp regex;
   final Color color;
-  MyTextEditingController({@required this.regex, @required this.color=Colors.red});
+  MyTextEditingController({@required this.regex, this.color = Colors.red});
 
   TextSpan generateTextSpan(TextStyle style) {
-    
     var highlightStyle = style.merge(TextStyle(color: color));
 
     Iterable<RegExpMatch> matches = regex.allMatches(text);
@@ -37,7 +36,7 @@ class MyTextEditingController extends TextEditingController {
               text: text.substring(match.start, match.end)));
           cursor = match.end;
           //add remain text after last match
-          if (i == matches.length - 1) {
+          if (i == matches.length - 1 && cursor != text.length) {
             tsList.add(TextSpan(
                 style: style, text: text.substring(cursor, text.length)));
           }
@@ -55,7 +54,7 @@ class MyTextEditingController extends TextEditingController {
             text: text.substring(match.start, match.end)));
         cursor = match.end;
         //add remain text after last match
-        if (i == matches.length - 1) {
+        if (i == matches.length - 1 && cursor != text.length) {
           tsList.add(TextSpan(
               style: style, text: text.substring(cursor, text.length)));
         }
