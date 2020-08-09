@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class MyTextEditingController extends TextEditingController {
   final RegExp regex;
   final Color color;
-  MyTextEditingController({@required this.regex, this.color=Colors.red});
+  MyTextEditingController({@required this.regex, @required this.color=Colors.red});
 
   TextSpan generateTextSpan(TextStyle style) {
     
