@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 
 class MyTextEditingController extends TextEditingController {
   final RegExp regex;
-  MyTextEditingController({@required this.regex});
+  final Color color;
+  MyTextEditingController({@required this.regex, this.color=Colors.red});
 
   TextSpan generateTextSpan(TextStyle style) {
     
-    var highlightStyle = style.merge(TextStyle(color: Colors.red));
+    var highlightStyle = style.merge(TextStyle(color: color));
 
     Iterable<RegExpMatch> matches = regex.allMatches(text);
 
