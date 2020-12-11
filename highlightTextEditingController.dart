@@ -16,50 +16,30 @@ class MyTextEditingController extends TextEditingController {
     int cursor = 0;
     List<TextSpan> tsList = [];
 
-    //if we have match in the beginning of text
-    if (matches.elementAt(0).start == 0) {
-      for (int i = 0; i < matches.length; i++) {
-        RegExpMatch match = matches.elementAt(i);
-        //add first match
-        if (i == 0) {
-          tsList.add(TextSpan(
-              style: highlightStyle,
-              text: text.substring(match.start, match.end)));
-          cursor = match.end;
-        } else {
-          //add excluded match
-          tsList.add(TextSpan(
-              style: style, text: text.substring(cursor, match.start)));
-          //add match
-          tsList.add(TextSpan(
-              style: highlightStyle,
-              text: text.substring(match.start, match.end)));
-          cursor = match.end;
-          //add remain text after last match
-          if (i == matches.length - 1 && cursor != text.length) {
-            tsList.add(TextSpan(
-                style: style, text: text.substring(cursor, text.length)));
-          }
-        }
-      }
-    } else {
-      for (int i = 0; i < matches.length; i++) {
-        RegExpMatch match = matches.elementAt(i);
-        //add text before match
-        tsList.add(
-            TextSpan(style: style, text: text.substring(cursor, match.start)));
-        //add match
+       for (int i = 0; i < matches.length; i++) {
+      RegExpMatch match = matches.elementAt(i);
+
+      if (cursor == match.start) {
         tsList.add(TextSpan(
             style: highlightStyle,
             text: text.substring(match.start, match.end)));
-        cursor = match.end;
-        //add remain text after last match
-        if (i == matches.length - 1 && cursor != text.length) {
-          tsList.add(TextSpan(
-              style: style, text: text.substring(cursor, text.length)));
-        }
+      } else {
+        tsList.add(
+            TextSpan(style: style, text: text.substring(cursor, match.start)));
+        tsList.add(TextSpan(
+            style: highlightStyle,
+            text: text.substring(match.start, match.end)));
+      }
+
+      cursor = match.end;
+
+      if (i == matches.length - 1 && cursor != text.length) {
+        tsList.add(
+            TextSpan(style: style, text: text.substring(cursor, text.length)));
+        print('3');
       }
     }
+    
     return TextSpan(children: tsList);
   }
 
